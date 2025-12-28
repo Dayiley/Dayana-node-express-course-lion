@@ -1,6 +1,6 @@
 const { writeFile, readFile } = require("fs").promises;
 
-writeFile("temp.text", "first line\n")
+writeFile("temp.txt", "first line\n")
   .then(() => {
     console.log("line 1 done");
     return writeFile("temp.txt", "second line\n", { flag: "a" });
