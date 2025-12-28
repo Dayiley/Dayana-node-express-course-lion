@@ -1,8 +1,6 @@
 const { createReadStream } = require("fs");
 const path = require("path");
 
-const filePath = path.join(__dirname, "../content/big.txt");
-
 const stream = createReadStream("./content/big.txt", {
   encoding: "utf8",
   highWaterMark: 200,
