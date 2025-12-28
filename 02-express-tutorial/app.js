@@ -1,19 +1,43 @@
 console.log("Express Tutorial");
+
 const { products } = require("./data");
 const express = require("express");
+const peopleRouter = require("./routes/people");
+
 const app = express();
 
-//Line tells the server to serve statics files from the "public" folder
-app.use(express.static("./public"));
+// ---------- MIDDLEWARES ----------
 
-//Lines for handle API responses from different types of requests
+// Logger middleware
+const logger = (req, res, next) => {
+  const time = new Date().toLocaleString();
+  console.log(`[${time}] ${req.method} ${req.url}`);
+  next();
+};
+
+app.use(logger);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+//Line tells the server to serve statics files from the "public" folder
+//app.use(express.static("./public"));
+app.use(express.static("./methods-public"));
+
+// ---------- TEST ROUTES ----------
 
 //request#1 - to test route
 app.get("/api/v1/test", (req, res) => {
   res.json({ message: "It worked!" });
 });
 
-//request#2 - Returns all products from the imported data.js file
+// Test route to confirm logger runs
+app.get("/api/v1/testlog", (req, res) => {
+  res.json({ message: "logger worked!" });
+});
+
+// ---------- PRODUCTS ROUTES ----------
+
+// Returns all products
 app.get("/api/v1/products", (req, res) => {
   res.json(products);
 });
@@ -58,7 +82,6 @@ app.get("/api/v1/query", (req, res) => {
       filteredProducts = filteredProducts.slice(0, limitNumber);
     }
   }
-
   //Return 404 if no products match the query
   if (filteredProducts.length === 0) {
     return res.status(404).json({ message: "No products matched your query" });
@@ -67,12 +90,16 @@ app.get("/api/v1/query", (req, res) => {
   res.json(filteredProducts);
 });
 
-//Line to Handle any undefined routes with a 404 response
+// ---------- PEOPLE ROUTES (ROUTER + CONTROLLERS) ----------
+
+app.use("/api/v1/people", peopleRouter);
+
+// ---------- 404 HANDLER ----------
 app.all("*", (req, res) => {
   res.status(404).send("Page not found");
 });
 
-//Line to Starts the server and listens on port 3000
+// ---------- START SERVER ----------
 app.listen(3000, () => {
   console.log("Server listening in port 3000...");
 });
