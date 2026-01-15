@@ -1,0 +1,25 @@
+In this lesson, you created a middleware function called asyncWrapper. Why?
+Suppose that you want to make sure that both a status code and an error message are sent back to the user when they request the URL for a task that does not exist. Assume that you’ve created a CustomAPIError class and an error handler that references that class. Complete the code:
+const getTask = asyncWrapper(async (req, res, next) => {  
+  const { id: taskID } = req.params;  
+  const task = await Task.findOne({ _id: taskID });  
+  if (!task) {  
+    // your code here  
+  }  
+  res.status(200).json({ task });  
+});  
+As you will see in the lessons that follow, you do not have to always create the asyncWrapper middleware, because you can instead use an NPM package called express-async-errors that provides the same capability.
+
+
+
+Answers:
+1-According to the tutorial, the asyncWrapper function was created to avoid repeating try/catch blocks in every async route. This middleware wraps async functions and automatically forwards any errors to Express’s error-handling middleware using next(), which helps keep the code clean, reusable, and easier to maintain.
+
+2- const getTask = asyncWrapper(async (req, res, next) => {  
+  const { id: taskID } = req.params;  
+  const task = await Task.findOne({ _id: taskID });  
+  if (!task) {  
+    return next(new CustomAPIError(`No task found with id ${taskID}`, 404));
+}  
+  res.status(200).json({ task });  
+});  
