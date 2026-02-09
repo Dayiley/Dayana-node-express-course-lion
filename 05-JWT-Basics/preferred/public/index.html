@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JWT Preferred App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      .card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 10px 14px;
+        margin-top: 12px;
+        cursor: pointer;
+      }
+      code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .row button {
+        flex: 1;
+        min-width: 150px;
+      }
+      .output {
+        white-space: pre-wrap;
+        background: #0b1020;
+        color: #d6e1ff;
+        padding: 12px;
+        border-radius: 10px;
+      }
+      .muted {
+        color: #666;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>JWT Basics Frontend</h1>
+    <p class="muted">
+      Endpoints: <code>POST /api/v1/logon</code> and
+      <code>GET /api/v1/hello</code>
+    </p>
+
+    <div class="card">
+      <h2>Logon</h2>
+      <label>
+        Name
+        <input id="name" type="text" placeholder="Dayana" />
+      </label>
+      <label>
+        Password
+        <input id="password" type="password" placeholder="Anything for now" />
+      </label>
+
+      <div class="row">
+        <button id="btnLogon">Logon (get token)</button>
+        <button id="btnLogout">Logout (clear token)</button>
+      </div>
+
+      <p id="tokenStatus" class="muted"></p>
+    </div>
+
+    <div class="card">
+      <h2>Protected Hello</h2>
+      <div class="row">
+        <button id="btnHello">Call /api/v1/hello</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Output</h2>
+      <div id="output" class="output">Ready.</div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
